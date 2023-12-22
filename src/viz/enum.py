@@ -92,8 +92,8 @@ RNA_CHALLENGES_LENGTH_SORTED = dict(
 
 CASP_RNA_CHALLENGES_LENGTH = {
     # "R1107": 69 ,
-    "R1108": 69 ,
-    "R1116": 157 ,
+    "R1108": 69,
+    "R1116": 157,
     "R1117": 30,
     "R1126": 363,
     "R1128": 238,

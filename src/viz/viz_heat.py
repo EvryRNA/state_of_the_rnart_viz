@@ -30,8 +30,14 @@ class VizHeat(VizAbstract):
             (0.655, 0.23),
             (0.9999, 0.23),
         ]
-        self.plot_heatmap_t_paper(PAPER_METRICS, positions, width=2000, height=700,
-                                  n_row=2, n_col=3 if self.benchmark == "RNA_PUZZLES" else 2)
+        self.plot_heatmap_t_paper(
+            PAPER_METRICS,
+            positions,
+            width=2000,
+            height=700,
+            n_row=2,
+            n_col=3 if self.benchmark == "RNA_PUZZLES" else 2,
+        )
         positions = [(0.475, 0.5), (0.999, 0.5)]
         self.plot_heatmap_t_paper(
             PAPER_SUP_METRICS,
@@ -139,7 +145,9 @@ class VizHeat(VizAbstract):
             margin=dict(l=20, r=20, t=50, b=20),
         )
         name = "supp_" if is_supp else ""
-        save_path = os.path.join(self.save_path_full, f"{name}{self.benchmark}_heatmap.png")
+        save_path = os.path.join(
+            self.save_path_full, f"{name}{self.benchmark}_heatmap.png"
+        )
         fig.write_image(save_path, scale=4, width=width, height=height)
 
     def _get_heat_maps(self, metrics):

@@ -8,7 +8,10 @@ from src.viz.enum import (
     MODELS,
     MODELS_TO_GROUP,
     OLD_TO_NEW,
-    PAPER_SUP_METRICS, RNA_NAMES, CASP_RNA_NAMES, RNA_CHALLENGES_LENGTH_SORTED,
+    PAPER_SUP_METRICS,
+    RNA_NAMES,
+    CASP_RNA_NAMES,
+    RNA_CHALLENGES_LENGTH_SORTED,
     CASP_RNA_CHALLENGES_LENGTH_SORTED,
 )
 
@@ -24,9 +27,13 @@ class VizAbstract:
         self.benchmark = benchmark
         self.scores_df = self._get_df_clean(csv_folder)
         self.save_path_dir = os.path.join("docker_data", "plots")
-        self.plot_type = None # To be completed by the subclasses
+        self.plot_type = None  # To be completed by the subclasses
         self.rna_names = RNA_NAMES if benchmark == "RNA_PUZZLES" else CASP_RNA_NAMES
-        self.rna_lengths = RNA_CHALLENGES_LENGTH_SORTED  if benchmark == "RNA_PUZZLES" else CASP_RNA_CHALLENGES_LENGTH_SORTED
+        self.rna_lengths = (
+            RNA_CHALLENGES_LENGTH_SORTED
+            if benchmark == "RNA_PUZZLES"
+            else CASP_RNA_CHALLENGES_LENGTH_SORTED
+        )
 
     def add_category(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -48,7 +55,6 @@ class VizAbstract:
             "Model": [],
             "Full_path": [],
         }
-        print(f"Csv folder: {csv_folder}")
         for csv_file in os.listdir(csv_folder):
             if csv_file.endswith(".csv"):
                 df = pd.read_csv(os.path.join(csv_folder, csv_file), index_col=[0])
@@ -122,8 +128,12 @@ class VizAbstract:
                 ]
             ],
         )
-        path_to_supp = os.path.join(self.save_path_dir, "table", f"{self.benchmark}_supplementary_results.csv")
-        path_to_save_paper = path_to_supp.replace("supplementary_results", "results_paper")
+        path_to_supp = os.path.join(
+            self.save_path_dir, "table", f"{self.benchmark}_supplementary_results.csv"
+        )
+        path_to_save_paper = path_to_supp.replace(
+            "supplementary_results", "results_paper"
+        )
         df_supp.to_csv(path_to_supp)
         df_paper.to_csv(path_to_save_paper)
 

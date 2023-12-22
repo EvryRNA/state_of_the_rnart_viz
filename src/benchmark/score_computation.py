@@ -27,13 +27,26 @@ class ScoreComputation:
             pred_path = os.path.join(self.preds_paths, challenge.replace(".pdb", ""))
             if os.path.isdir(pred_path):
                 native_path = os.path.join(self.native_paths, challenge)
-                output_path = os.path.join(self.output_path, challenge.replace(".pdb", ".csv"))
-                log_path = os.path.join(self.log_path, challenge.replace(".pdb", ".log"))
-                time_path = os.path.join(self.time_path, challenge.replace(".pdb", "_time.csv"))
-                self.compute_challenge(native_path, pred_path, output_path, log_path, time_path)
+                output_path = os.path.join(
+                    self.output_path, challenge.replace(".pdb", ".csv")
+                )
+                log_path = os.path.join(
+                    self.log_path, challenge.replace(".pdb", ".log")
+                )
+                time_path = os.path.join(
+                    self.time_path, challenge.replace(".pdb", "_time.csv")
+                )
+                self.compute_challenge(
+                    native_path, pred_path, output_path, log_path, time_path
+                )
 
     def compute_challenge(
-        self, native_path: str, pred_path: str, output_path: str, log_path: str, time_path: str
+        self,
+        native_path: str,
+        pred_path: str,
+        output_path: str,
+        log_path: str,
+        time_path: str,
     ):
         """
         Run the docker command to compute all the metrics

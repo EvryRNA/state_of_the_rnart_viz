@@ -77,7 +77,9 @@ class VizBox(VizAbstract):
             fig.update_xaxes(showticklabels=False, row=2, col=col)
         for row, col in [(1, 3), (2, 2), (2, 3)]:
             fig.update_yaxes(range=[-0.05, 1.05], row=row, col=col)
-        save_path = os.path.join(self.save_path_full, f"{name}_{self.benchmark}_method.png")
+        save_path = os.path.join(
+            self.save_path_full, f"{name}_{self.benchmark}_method.png"
+        )
         fig.write_image(save_path, scale=2, width=width, height=height)
 
     def _get_df_box_plot_ready(self, metrics: List = SUB_METRICS) -> pd.DataFrame:
