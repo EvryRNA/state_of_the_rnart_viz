@@ -1,0 +1,15 @@
+CacheControl==0.12.11
+kaleido==0.2.1
+msgpack==1.0.4
+numpy==1.26.2
+packaging==23.2
+pandas==2.1.4
+pip==23.3.1
+plotly==5.18.0
+python-dateutil==2.8.2
+pytz==2023.3.post1
+setuptools==68.2.2
+six==1.16.0
+tenacity==8.2.3
+tzdata==2023.3
+wheel==0.41.2
