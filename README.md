@@ -4,6 +4,8 @@ This code runs the different visualisations of the paper [TO DO].
 
 All the different visualisations can be run in this repository. 
 
+![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)
+![](docker_data/plots/bopxplot/RNA_PUZZLES_bopxplot.png)
 
 ## Installation
 
