@@ -1,34 +1,63 @@
-# State-of-the-RNArt website
+# State-of-the-RNArt visualisations
 
-This repository is the source code for the website State-of-the-RNArt. 
+This code runs the different visualisations of the paper [TO DO]. 
 
-![State-of-the-RNArt website](img/screenshot_website.png)
+All the different visualisations can be run in this repository. 
 
-## Installations
+![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)
+![](docker_data/plots/boxplot/paper_RNA_PUZZLES_method.png)
 
+## Installation
 
-### Locally
-You need to have `python 3.10` installed. 
+The installations can be done to do the different visualisations. 
 
-You can create a virtual environment, and then use:
-```
+To do so, you can use: 
+```bash
 pip install -r requirements.txt
 ```
 
-### Docker
-You can also use docker to run the website.
+## Usage
 
-To do so, you have to build the image and then run it and expose the port `8050` using:
+To run the visualisations, one can use:
+```bash
+make viz
+```
+or 
+```bash
+python -m src.viz_cli
+```
+
+It will run all the visualisations and save them in the `docker_data/plots` folder.
+
+
+## Metrics computation
+
+You can find the different metrics computation in the `docker_data/output` folder.
+
+There are metrics computation for the `RNA_PUZZLES` and `CASP_RNA` datasets (not complete for this dataset).
+
+You can recompute the metrics by running:
+```bash
+make run
+```
+or 
+```bash
+python -m src.benchmark.score_computation
+```
+
+## Directory
+
+This repository is organised as follows:
+- `docker_data`: the different predictions from the nine benchmarked tools for `RNA_PUZZLES` and `CASP_RNA` datasets.
+                 It also includes the different metrics computation for these datasets (in the `docker_data/output` folder).
+                 The visualisations are saved in the `docker_data/plots` folder.
+- `src`: the different scripts to run the visualisations and the metrics computation.
+- `Makefile`: a Makefile to run the different scripts.
+- `requirements.txt`: the different requirements to run the scripts.
+
+## Citation
+
+If you use this code, please cite the following paper:
 
 ```
-docker build -t state_of_the_rnart_website
-docker run -it -p 8050:8050 state_of_the_rnart_website
-```
-
-## Run
-
-To run the program, you can use:
-
-```
-gunicorn --chdir src dash_helper:server -b :8000
 ```
