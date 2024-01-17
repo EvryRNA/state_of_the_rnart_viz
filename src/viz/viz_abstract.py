@@ -4,36 +4,18 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from src.viz.enum import (
+from src.enums.enums_heatmap import (
     MODELS,
     MODELS_TO_GROUP,
     OLD_TO_NEW,
     PAPER_SUP_METRICS,
-    RNA_NAMES,
-    CASP_RNA_NAMES,
-    RNA_CHALLENGES_LENGTH_SORTED,
-    CASP_RNA_CHALLENGES_LENGTH_SORTED,
 )
 
 
 class VizAbstract:
-    def __init__(self, csv_folder: str, benchmark: str):
-        """
-
-        :param csv_folder: folder to the csv files with the different metrics
-        :param benchmark: either "RNA_PUZZLES" or "CASP_RNA"
-        """
+    def __init__(self, csv_folder: str):
         self.csv_folder = csv_folder
-        self.benchmark = benchmark
         self.scores_df = self._get_df_clean(csv_folder)
-        self.save_path_dir = os.path.join("docker_data", "plots")
-        self.plot_type = None  # To be completed by the subclasses
-        self.rna_names = RNA_NAMES if benchmark == "RNA_PUZZLES" else CASP_RNA_NAMES
-        self.rna_lengths = (
-            RNA_CHALLENGES_LENGTH_SORTED
-            if benchmark == "RNA_PUZZLES"
-            else CASP_RNA_CHALLENGES_LENGTH_SORTED
-        )
 
     def add_category(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -113,7 +95,7 @@ class VizAbstract:
             .mean()
         )
         df = df.pivot(index="Metric_name", columns="Model", values="Metric").T
-        df_supp, df_paper = (
+        df_all, df_paper = (
             df[PAPER_SUP_METRICS],
             df[
                 [
@@ -128,14 +110,15 @@ class VizAbstract:
                 ]
             ],
         )
-        path_to_supp = os.path.join(
-            self.save_path_dir, "table", f"{self.benchmark}_supplementary_results.csv"
-        )
-        path_to_save_paper = path_to_supp.replace(
-            "supplementary_results", "results_paper"
-        )
-        df_supp.to_csv(path_to_supp)
-        df_paper.to_csv(path_to_save_paper)
+        path_to_save_all = os.path.join("data", "plots", "table", "supp_results.csv")
+        path_to_save_paper = path_to_save_all.replace("results", "results_paper")
+        params = {
+            "sep": "&",
+            "lineterminator": "\\\ \n",
+            "float_format": "%.2f",
+        }  # noqa: W605
+        df_all.to_csv(path_to_save_all, **params)
+        df_paper.to_csv(path_to_save_paper, **params)
 
     def _clean_fig(self, fig):
         fig.update_annotations(font_size=10)

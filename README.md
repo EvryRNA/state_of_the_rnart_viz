@@ -1,63 +1,34 @@
-# State-of-the-RNArt visualisations
+# State-of-the-RNArt website
 
-This code runs the different visualisations of the paper [TO DO]. 
+This repository is the source code for the website State-of-the-RNArt. 
 
-All the different visualisations can be run in this repository. 
+![State-of-the-RNArt website](img/screenshot_website.png)
 
-![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)
-![](docker_data/plots/boxplot/paper_RNA_PUZZLES_method.png)
+## Installations
 
-## Installation
 
-The installations can be done to do the different visualisations. 
+### Locally
+You need to have `python 3.10` installed. 
 
-To do so, you can use: 
-```bash
+You can create a virtual environment, and then use:
+```
 pip install -r requirements.txt
 ```
 
-## Usage
+### Docker
+You can also use docker to run the website.
 
-To run the visualisations, one can use:
-```bash
-make viz
-```
-or 
-```bash
-python -m src.viz_cli
-```
-
-It will run all the visualisations and save them in the `docker_data/plots` folder.
-
-
-## Metrics computation
-
-You can find the different metrics computation in the `docker_data/output` folder.
-
-There are metrics computation for the `RNA_PUZZLES` and `CASP_RNA` datasets (not complete for this dataset).
-
-You can recompute the metrics by running:
-```bash
-make run
-```
-or 
-```bash
-python -m src.benchmark.score_computation
-```
-
-## Directory
-
-This repository is organised as follows:
-- `docker_data`: the different predictions from the nine benchmarked tools for `RNA_PUZZLES` and `CASP_RNA` datasets.
-                 It also includes the different metrics computation for these datasets (in the `docker_data/output` folder).
-                 The visualisations are saved in the `docker_data/plots` folder.
-- `src`: the different scripts to run the visualisations and the metrics computation.
-- `Makefile`: a Makefile to run the different scripts.
-- `requirements.txt`: the different requirements to run the scripts.
-
-## Citation
-
-If you use this code, please cite the following paper:
+To do so, you have to build the image and then run it and expose the port `8050` using:
 
 ```
+docker build -t state_of_the_rnart_website
+docker run -it -p 8050:8050 state_of_the_rnart_website
+```
+
+## Run
+
+To run the program, you can use:
+
+```
+gunicorn --chdir src dash_helper:server -b :8000
 ```
