@@ -1,7 +1,7 @@
 REMARK 250 Model edited with rna-tools
 REMARK 250  ver 3.13.7 
 REMARK 250  https://github.com/mmagnus/rna-tools 
-REMARK 250  Wed Nov  8 14:45:03 2023
+REMARK 250  Fri Jan 26 09:28:53 2024
 ATOM      1  P     G A   1       1.053  -0.149   1.823  1.00  0.00           P  
 ATOM      2  OP1   G A   1       0.724  -1.579   1.590  1.00  0.00           O  
 ATOM      3  OP2   G A   1       1.141   0.372   3.205  1.00  0.00           O  
