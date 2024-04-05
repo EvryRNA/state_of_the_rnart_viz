@@ -1,11 +1,14 @@
 # State-of-the-RNArt visualisations
 
-This code runs the different visualisations of the paper [TO DO]. 
+This code runs the different visualisations of the paper `State-of-the-RNArt`. 
 
-All the different visualisations can be run in this repository. 
+All the different visualisations can be run in this repository.
+
+Here are some example of the available visualisations:
 
 ![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)
-![](docker_data/plots/boxplot/paper_RNA_PUZZLES_method.png)
+![](docker_data/plots/boxplot/RNASOLO_box.png)
+![](docker_data/plots/polar/CASP_RNA.png)
 
 ## Installation
 
@@ -34,7 +37,7 @@ It will run all the visualisations and save them in the `docker_data/plots` fold
 
 You can find the different metrics computation in the `docker_data/output` folder.
 
-There are metrics computation for the `RNA_PUZZLES` and `CASP_RNA` datasets (not complete for this dataset).
+There are metrics computation for the `RNA_PUZZLES`,`CASP_RNA` and `RNASOLO` datasets.
 
 You can recompute the metrics by running:
 ```bash
@@ -48,7 +51,7 @@ python -m src.benchmark.score_computation
 ## Directory
 
 This repository is organised as follows:
-- `docker_data`: the different predictions from the nine benchmarked tools for `RNA_PUZZLES` and `CASP_RNA` datasets.
+- `docker_data`: the different predictions from the nine benchmarked tools for `RNA_PUZZLES`,`CASP_RNA` and `RNASOLO` datasets.
                  It also includes the different metrics computation for these datasets (in the `docker_data/output` folder).
                  The visualisations are saved in the `docker_data/plots` folder.
 - `src`: the different scripts to run the visualisations and the metrics computation.
@@ -60,4 +63,7 @@ This repository is organised as follows:
 If you use this code, please cite the following paper:
 
 ```
+State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction
+Clément Bernard, Guillaume Postic, Sahar Ghannay, Fariza Tahi
+bioRxiv 2023.12.22.573067; doi: https://doi.org/10.1101/2023.12.22.573067
 ```
