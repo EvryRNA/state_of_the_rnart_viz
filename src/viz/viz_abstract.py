@@ -8,11 +8,10 @@ from src.viz.enum import (
     MODELS,
     MODELS_TO_GROUP,
     OLD_TO_NEW,
-    PAPER_SUP_METRICS,
-    RNA_NAMES,
-    CASP_RNA_NAMES,
-    RNA_CHALLENGES_LENGTH_SORTED,
-    CASP_RNA_CHALLENGES_LENGTH_SORTED,
+    NAMES_TO_BENCHMARK,
+    NAMES_TO_LENGTH,
+    PAPER_METRICS,
+    ORDER_MODELS,
 )
 
 
@@ -21,19 +20,15 @@ class VizAbstract:
         """
 
         :param csv_folder: folder to the csv files with the different metrics
-        :param benchmark: either "RNA_PUZZLES" or "CASP_RNA"
+        :param benchmark: either "RNA_PUZZLES", "CASP_RNA" or "RNASOLO"
         """
         self.csv_folder = csv_folder
         self.benchmark = benchmark
         self.scores_df = self._get_df_clean(csv_folder)
         self.save_path_dir = os.path.join("docker_data", "plots")
         self.plot_type = None  # To be completed by the subclasses
-        self.rna_names = RNA_NAMES if benchmark == "RNA_PUZZLES" else CASP_RNA_NAMES
-        self.rna_lengths = (
-            RNA_CHALLENGES_LENGTH_SORTED
-            if benchmark == "RNA_PUZZLES"
-            else CASP_RNA_CHALLENGES_LENGTH_SORTED
-        )
+        self.rna_names = NAMES_TO_BENCHMARK.get(benchmark, None)
+        self.rna_lengths = NAMES_TO_LENGTH.get(benchmark, None)
 
     def add_category(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -75,6 +70,8 @@ class VizAbstract:
         ) & (scores_df["Model"] == "epRNA")
         # Use the boolean mask to drop the rows
         scores_df.loc[mask, "Metric"] = np.nan  # type: ignore
+        mask = (scores_df["Metric_name"] == "DI") & (scores_df["Metric"] > 200)
+        scores_df.loc[mask, "Metric"] = 200
         return scores_df
 
     def _change_name(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -105,37 +102,21 @@ class VizAbstract:
         df["Model"] = new_model_names
         return df
 
-    def summary_table(self):
+    def summary_all_table(self):
         scores_df = self.scores_df[self.scores_df["Model"].isin(MODELS)]
         df = (
             scores_df[["Metric", "Metric_name", "Model"]]
             .groupby(["Metric_name", "Model"], as_index=False)
             .mean()
         )
-        df = df.pivot(index="Metric_name", columns="Model", values="Metric").T
-        df_supp, df_paper = (
-            df[PAPER_SUP_METRICS],
-            df[
-                [
-                    "RMSD",
-                    "εRMSD",
-                    "DI",
-                    "P-VALUE",
-                    "TM-score",
-                    "GDT-TS",
-                    "INF-ALL",
-                    "lDDT",
-                ]
-            ],
+        pivot_df = df.pivot(index="Metric_name", columns="Model", values="Metric").T
+        metrics = [metric for metric in PAPER_METRICS if metric in pivot_df.columns]
+        pivot_df = pivot_df.loc[ORDER_MODELS, metrics]
+        save_path = os.path.join(
+            self.save_path_dir, "table", f"{self.benchmark}_results.csv"
         )
-        path_to_supp = os.path.join(
-            self.save_path_dir, "table", f"{self.benchmark}_supplementary_results.csv"
-        )
-        path_to_save_paper = path_to_supp.replace(
-            "supplementary_results", "results_paper"
-        )
-        df_supp.to_csv(path_to_supp)
-        df_paper.to_csv(path_to_save_paper)
+        pivot_df.to_csv(save_path)
+        return pivot_df
 
     def _clean_fig(self, fig):
         fig.update_annotations(font_size=10)

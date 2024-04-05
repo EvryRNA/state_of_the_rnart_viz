@@ -63,8 +63,11 @@ class ScoreComputation:
 
 
 if __name__ == "__main__":
-    NATIVE_PATHS = os.path.join("docker_data", "input", "benchmark", "NATIVE")
-    PREDS_PATHS = os.path.join("docker_data", "input", "benchmark", "PREDS")
-    OUTPUT_PATH = os.path.join("docker_data", "output", "benchmark")
-    score_computation = ScoreComputation(NATIVE_PATHS, PREDS_PATHS, OUTPUT_PATH)
-    score_computation.run_benchmark()
+    # To compute challenge for all the benchmarks
+    prefix = os.path.join("docker_data", "input")
+    for dataset in ["RNA_PUZZLES", "RNASOLO", "CASP_RNA"]:
+        NATIVE_PATHS = os.path.join(prefix, dataset, "NATIVE")
+        PREDS_PATHS = os.path.join(prefix, dataset, "PREDS")
+        OUTPUT_PATH = os.path.join(prefix.replace("input", "output"), "RNA_PUZZLES")
+        score_computation = ScoreComputation(NATIVE_PATHS, PREDS_PATHS, OUTPUT_PATH)
+        score_computation.run_benchmark()

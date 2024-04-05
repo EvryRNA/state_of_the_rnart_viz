@@ -31,6 +31,7 @@ METRICS = [
     "tm-score-ost",
     "TM-score",
     "QS-score",
+    "CAD",
 ]
 SUB_METRICS = [
     "RMSD",
@@ -58,9 +59,19 @@ ALL_MODELS = [
 # Higher is better
 ASC_METRICS = ["INF-ALL", "TM-score", "GDT-TS", "lDDT"]
 # Lower is better
-DESC_METRICS = ["RMSD", "P-VALUE", "DI", "εRMSD"]
-PAPER_METRICS = ["RMSD", "εRMSD", "P-VALUE", "INF-ALL", "TM-score", "lDDT"]
-PAPER_SUP_METRICS = ["GDT-TS", "DI"]
+DESC_METRICS = ["RMSD", "P-VALUE", "DI", "εRMSD", "MCQ"]
+PAPER_METRICS = [
+    "RMSD",
+    "MCQ",
+    "DI",
+    "P-VALUE",
+    "εRMSD",
+    "INF-ALL",
+    "TM-score",
+    "lDDT",
+    "GDT-TS",
+    "CAD",
+]
 
 RNA_CHALLENGES_LENGTH = {
     "rp03": 84,
@@ -91,7 +102,7 @@ RNA_CHALLENGES_LENGTH_SORTED = dict(
 )
 
 CASP_RNA_CHALLENGES_LENGTH = {
-    # "R1107": 69 ,
+    "R1107": 69,
     "R1108": 69,
     "R1116": 157,
     "R1117": 30,
@@ -144,4 +155,53 @@ OLD_TO_NEW = {
     "vfoldpipeline": "Vfold-Pipeline",
     "rnajp": "RNAJP",
     # "INF-ALL": r"$INF_{all}$"
+}
+
+
+RNASOLO_RAW_CHALLENGES = {
+    "1YFG": 64,
+    "1XJR": 46,
+    "4ENC": 52,
+    "4OQU": 97,
+    "3LA5": 71,
+    "4ZNP": 73,
+    "4WFL": 105,
+    "7KGA": 89,
+    "2QUS": 68,
+    "6N5P": 126,
+    "3DIL": 173,
+    "2A64": 298,
+    "8SA3": 210,
+    "7D7W": 51,
+    "4RUM": 91,
+    "6CU1": 79,
+    "3OXE": 86,
+    "6FZ0": 47,
+    "4AOB": 94,
+    "2IL9": 135,
+    "6UES": 119,
+    "4LVW": 89,
+    "5T83": 89,
+    "1U9S": 155,
+    "6PRV": 57,
+    "4PQV": 68,
+    "3D2V": 77,
+    "5NWQ": 40,
+    "7ELQ": 45,
+}
+RNASOLO_LENGTH_SORTED = dict(
+    sorted(RNASOLO_RAW_CHALLENGES.items(), key=operator.itemgetter(1))
+)
+
+RNASOLO_NAMES = list(RNASOLO_LENGTH_SORTED.keys())
+
+NAMES_TO_BENCHMARK = {
+    "RNA_PUZZLES": RNA_NAMES,
+    "CASP_RNA": CASP_RNA_NAMES,
+    "RNASOLO": RNASOLO_NAMES,
+}
+NAMES_TO_LENGTH = {
+    "RNA_PUZZLES": RNA_CHALLENGES_LENGTH_SORTED,
+    "CASP_RNA": CASP_RNA_CHALLENGES_LENGTH_SORTED,
+    "RNASOLO": RNASOLO_LENGTH_SORTED,
 }

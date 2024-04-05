@@ -2,13 +2,11 @@ import os
 from typing import List, Any
 
 from src.viz.enum import (
-    PAPER_METRICS,
-    PAPER_SUP_METRICS,
     ASC_METRICS,
     MODELS,
     METRICS,
     ORDER_MODELS,
-    RNA_CHALLENGES_LENGTH,
+    PAPER_METRICS,
 )
 from src.viz.viz_abstract import VizAbstract
 import plotly.subplots as sp
@@ -22,34 +20,24 @@ class VizHeat(VizAbstract):
         self.save_path_full = os.path.join(self.save_path_dir, self.plot_type)
 
     def plot_heatmaps(self):
+        """
+        Plot the heatmap visualiation
+        :param name: Name of the benchmark
+        :return:
+        """
         positions = [
-            (0.308, 0.77),
-            (0.655, 0.77),
-            (0.9999, 0.77),
-            (0.308, 0.23),
-            (0.655, 0.23),
-            (0.9999, 0.23),
+            (0.315, 0.9),
+            (0.66, 0.9),
+            (0.9999, 0.9),
+            (0.315, 0.635),
+            (0.66, 0.635),
+            (0.9999, 0.635),
+            (0.315, 0.365),
+            (0.66, 0.365),
+            (0.9999, 0.365),
+            (0.315, 0.1),
         ]
-        self.plot_heatmap_t_paper(
-            PAPER_METRICS,
-            positions,
-            width=2000,
-            height=700,
-            n_row=2,
-            n_col=3 if self.benchmark == "RNA_PUZZLES" else 2,
-        )
-        positions = [(0.475, 0.5), (0.999, 0.5)]
-        self.plot_heatmap_t_paper(
-            PAPER_SUP_METRICS,
-            positions,
-            is_supp=True,
-            n_row=1,
-            n_col=2,
-            width=1400,
-            height=350,
-            len_color=1,
-            horizontal_spacing=0.05,
-        )
+        self.plot_heatmap_t_paper(positions, width=2600, height=2000)
 
     def _update_axes_heatmap(self, fig: Any, row, col):
         fig.update_xaxes(
@@ -85,33 +73,57 @@ class VizHeat(VizAbstract):
                 continue
         return new_heatmaps
 
+    def _update_axes_heatmap(self, fig: Any, row, col):
+        fig.update_xaxes(
+            row=row,
+            col=col,
+            showline=True,
+            showticklabels=True,
+            tickfont=dict(size=20),
+            tickangle=90,
+        )
+        fig.update_yaxes(
+            row=row,
+            col=col,
+            showline=True,
+            showticklabels=True,
+            nticks=len(self.rna_lengths),
+            tickangle=0,
+            tickfont=dict(size=20),
+        )
+        return fig
+
     def plot_heatmap_t_paper(
         self,
-        metrics: List,
         positions,
-        is_supp: bool = False,
-        n_row=2,
+        n_row=4,
         n_col=3,
-        len_color=0.45,
-        width=1400,
+        len_color=0.2,
+        width=3000,
         height=800,
-        horizontal_spacing=0.04,
+        horizontal_spacing=0.03,
     ):
-        # Create a subplot with three rows and three columns
+        metrics = PAPER_METRICS
         fig = sp.make_subplots(
             rows=n_row,
             cols=n_col,
             horizontal_spacing=horizontal_spacing,
-            vertical_spacing=0.09,
+            vertical_spacing=0.07,
             subplot_titles=[x.replace("INF-ALL", "INF") for x in metrics],
-        )  # Adjust width
+        )
         heatmaps = self._get_heat_maps(metrics)
-        heatmaps = self.convert_heatmap(heatmaps)
+        heatmaps = [
+            x.T[self.rna_names] for x in heatmaps
+        ]  # To select RNA challenges order
         for row in range(n_row):
             for col in range(n_col):
                 index = row * n_col + col
+                if index >= len(heatmaps):
+                    break
                 data = heatmaps[index]
                 position = positions[index]
+                if "casp" in self.benchmark.lower():
+                    data = data.drop("MC-Sym", axis=0)
                 columns = [
                     f"{rna} ({self.rna_lengths[rna]} nt)" for rna in data.columns
                 ]
@@ -137,16 +149,18 @@ class VizHeat(VizAbstract):
                 fig = self._update_axes_heatmap(fig, row + 1, col + 1)
                 if col != 0:
                     fig.update_yaxes(showticklabels=False, row=row + 1, col=col + 1)
-                if row != 1 and n_row != 1:
+                if row != n_row - 1:
                     fig.update_xaxes(showticklabels=False, row=row + 1, col=col + 1)
+                if col != 0 and row == n_row - 2:
+                    fig.update_xaxes(showticklabels=True, row=row + 1, col=col + 1)
+
         fig = self._clean_fig(fig)
         fig.update_annotations(font_size=24)
         fig.update_layout(
             margin=dict(l=20, r=20, t=50, b=20),
         )
-        name = "supp_" if is_supp else ""
         save_path = os.path.join(
-            self.save_path_full, f"{name}{self.benchmark}_heatmap.png"
+            "docker_data", "plots", "heatmap", f"{self.benchmark}_heatmap.png"
         )
         fig.write_image(save_path, scale=4, width=width, height=height)
 

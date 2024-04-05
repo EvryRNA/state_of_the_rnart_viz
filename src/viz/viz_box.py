@@ -6,7 +6,6 @@ import plotly.express as px
 
 from src.viz.enum import (
     PAPER_METRICS,
-    PAPER_SUP_METRICS,
     COLORS,
     ORDER_MODELS,
     METRICS,
@@ -23,30 +22,19 @@ class VizBox(VizAbstract):
         self.save_path_full = os.path.join(self.save_path_dir, self.plot_type)
 
     def box_plot_by_method(self):
-        self._box_plot_by_method(PAPER_METRICS, name="paper", width=1200, height=600)
-        self._box_plot_by_method(
-            PAPER_SUP_METRICS,
-            name="paper_sup",
-            width=1000,
-            height=400,
-            legend_coordinates=(0.53, -0.45),
-        )
+        self._box_plot_by_method(width=1200, height=600)
 
     def _box_plot_by_method(
         self,
-        metrics: List[str],
-        name: str,
         width: int = 1200,
         height: int = 800,
         legend_coordinates=(0.43, -0.25),
     ):
-        metrics = (
-            [x for x in metrics if x not in PAPER_METRICS]
-            if name != "paper"
-            else metrics
-        )
+        metrics = PAPER_METRICS
         df = self._get_df_box_plot_ready(metrics=metrics)
         df = df.rename(columns={"Category": "Method"}).replace({"INF-ALL": "INF"})
+        if "casp" in self.benchmark.lower():
+            df = df[df["Model"] != "MC-Sym"]
         fig = px.box(
             df,
             x="Model",
@@ -54,14 +42,12 @@ class VizBox(VizAbstract):
             color="Method",
             facet_col="Metric_name",
             facet_col_wrap=3,
-            facet_row_spacing=0.12,
+            facet_row_spacing=0.06,
             facet_col_spacing=0.05,
             color_discrete_map=COLORS,
             category_orders={
                 "Model": ORDER_MODELS,
-                "Metric_name": [
-                    x.replace("INF-ALL", "INF") for x in METRICS if x in metrics
-                ],
+                "Metric_name": [x.replace("INF-ALL", "INF") for x in metrics],
             },
         )
         fig = self._update_fig_box_plot(
@@ -74,12 +60,10 @@ class VizBox(VizAbstract):
         for cat, color in COLORS.items():
             fig.update_traces(fillcolor=color, selector=dict(name=cat))
         for col in range(1, 4):
-            fig.update_xaxes(showticklabels=False, row=2, col=col)
-        for row, col in [(1, 3), (2, 2), (2, 3)]:
-            fig.update_yaxes(range=[-0.05, 1.05], row=row, col=col)
-        save_path = os.path.join(
-            self.save_path_full, f"{name}_{self.benchmark}_method.png"
-        )
+            fig.update_xaxes(showticklabels=False, row=3, col=col)
+            fig.update_xaxes(showticklabels=False, row=4, col=col)
+        fig.update_xaxes(showticklabels=False, row=2, col=1)
+        save_path = os.path.join(self.save_path_full, f"{self.benchmark}_box.png")
         fig.write_image(save_path, scale=2, width=width, height=height)
 
     def _get_df_box_plot_ready(self, metrics: List = SUB_METRICS) -> pd.DataFrame:
