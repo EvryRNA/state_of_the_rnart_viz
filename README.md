@@ -6,10 +6,17 @@ All the different visualisations can be run in this repository.
 
 Here are some example of the available visualisations:
 
+### Heatmap
+RNASolo | RNA_Puzzles | CASP_RNA
+:-------------------------:|:-------------------------:|:-------------------------:
+![](docker_data/plots/heatmap/RNASOLO_heatmap.png) | ![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)| ![](docker_data/plots/heatmap/CASP_RNA_heatmap.png)
 
+### Box plot
+RNASolo |                    RNA_Puzzles                     | CASP_RNA
+:-------------------------:|:--------------------------------------------------:|:-------------------------:
+![](docker_data/plots/boxplot/RNASOLO_box.png) | ![](docker_data/plots/boxplot/RNA_PUZZLES_box.png) | ![](docker_data/plots/boxplot/CASP_RNA_box.png)
 
-![](docker_data/plots/heatmap/RNA_PUZZLES_heatmap.png)
-![](docker_data/plots/boxplot/RNASOLO_box.png)
+### Polar plot 
 RNASolo | RNA_Puzzles | CASP_RNA
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](docker_data/plots/polar/RNASOLO.png) | ![](docker_data/plots/polar/RNA_PUZZLES.png)| ![](docker_data/plots/polar/CASP_RNA.png)
