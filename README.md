@@ -1,12 +1,29 @@
+<div align="center">
+<a href="https://doi.org/10.1093/nargab/lqae048" target="_blank" title="Go to article"><img width="500px" alt="logo" src="docker_data/img/logo.svg"></a>
+<a name="readme-top"></a>
+
 # State-of-the-RNArt visualisations
 
-This code runs the different visualisations of the paper `State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction`. 
 
 
-- [UPDATE MAY 2024]: Add predictions from AlphaFold 3 `Abramson, J., Adler, J., Dunger, J. et al. Accurate structure prediction of biomolecular interactions with AlphaFold3. Nature (2024). https://doi.org/10.1038/s41586-024-07487-w`
+The code and the predictions from `State-of-the-RNArt` paper <br> with three test sets: `RNA_PUZZLES`, `CASP_RNA` and `RNASOLO`. <br> Code to run the different visualisations of the paper is available in this repository.
+
+[![Article][article_img]][article_url]
+[![License][repo_license_img]][repo_license_url]
 
 
+<a href="https://doi.org/10.1093/nargab/lqae048" target="_blank" title="Go to article"><img width="250px" alt="logo" src="docker_data/img/1U9S_spin.gif"></a>
+<a name="readme-top"></a>
 
+
+[![Update][update_img]][update_url]
+
+
+We included predictions from `AlphaFold 3` as well as 10 other methods. <br> The predictions are available in the `docker_data` folder.
+
+</div>
+
+## Getting started
 
 All the different visualisations can be run in this repository.
 
@@ -85,3 +102,29 @@ State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction
 NAR Genomics and Bioinformatics, Volume 6, Issue 2, June 2024, lqae048, 
 https://doi.org/10.1093/nargab/lqae048
 ```
+
+Or using the bibtex format:
+
+```bibtex
+@article{Bernard2024,
+  author = {Clément Bernard and Guillaume Postic and Sahar Ghannay and Fariza Tahi},
+  title = {State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction},
+  journal = {NAR Genomics and Bioinformatics},
+  volume = {6},
+  number = {2},
+  pages = {lqae048},
+  year = {2024},
+  month = {June},
+  doi = {10.1093/nargab/lqae048},
+  url = {https://doi.org/10.1093/nargab/lqae048}
+}
+```
+
+<!-- Links -->
+
+[article_img]: https://img.shields.io/badge/NAR_Genomics_and_Bioinformatics-Article-blue?style=for-the-badge&logo=none
+[article_url]: https://doi.org/10.1093/nargab/lqae048
+[repo_license_img]: https://img.shields.io/badge/license-Apache_2.0-red?style=for-the-badge&logo=none
+[repo_license_url]: https://github.com/EvryRNA/state_of_the_rnart_viz/blob/main/LICENSE
+[update_img]: https://img.shields.io/badge/Update_May_2024-AlphaFold3-green?style=for-the-badge&logo=none
+[update_url]: https://github.com/EvryRNA/state_of_the_rnart_viz/blob/main
