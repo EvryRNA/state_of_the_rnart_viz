@@ -12,11 +12,10 @@ class VizCLI:
         self.benchmark = os.path.basename(csv_folder)
 
     def run(self):
-        pass
-        # viz_box = VizBox(self.csv_folder, self.benchmark)
-        # viz_box.box_plot_by_method()
+        viz_box = VizBox(self.csv_folder, self.benchmark)
+        viz_box.box_plot_by_method()
         viz_heat = VizHeat(self.csv_folder, self.benchmark)
-        # viz_heat.plot_heatmaps()
+        viz_heat.plot_heatmaps()
         viz_heat.summary_all_table()
 
     @staticmethod
@@ -38,4 +37,4 @@ if __name__ == "__main__":
     benchmarks = ["CASP_RNA", "RNA_PUZZLES", "RNASOLO"]
     for benchmark in benchmarks:
         VizCLI.run_benchmark(benchmark)
-    # VizCLI.run_all_benchmark(benchmarks)
+    VizCLI.run_all_benchmark(benchmarks)

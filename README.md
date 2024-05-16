@@ -1,6 +1,12 @@
 # State-of-the-RNArt visualisations
 
-This code runs the different visualisations of the paper `State-of-the-RNArt`. 
+This code runs the different visualisations of the paper `State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction`. 
+
+
+- [UPDATE MAY 2024]: Add predictions from AlphaFold 3 `Abramson, J., Adler, J., Dunger, J. et al. Accurate structure prediction of biomolecular interactions with AlphaFold3. Nature (2024). https://doi.org/10.1038/s41586-024-07487-w`
+
+
+
 
 All the different visualisations can be run in this repository.
 
@@ -74,7 +80,8 @@ This repository is organised as follows:
 If you use this code, please cite the following paper:
 
 ```
-State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction
-Clément Bernard, Guillaume Postic, Sahar Ghannay, Fariza Tahi
-bioRxiv 2023.12.22.573067; doi: https://doi.org/10.1101/2023.12.22.573067
+Clément Bernard, Guillaume Postic, Sahar Ghannay, Fariza Tahi, 
+State-of-the-RNArt: benchmarking current methods for RNA 3D structure prediction, 
+NAR Genomics and Bioinformatics, Volume 6, Issue 2, June 2024, lqae048, 
+https://doi.org/10.1093/nargab/lqae048
 ```
